@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate the future value of your SIP investments with our easy-to-use SIP Calculator. Plan your investments and achieve your financial goals.">
+    <meta name="keywords" content="SIP calculator, systematic investment plan, investment calculator, financial planning">
+    <meta name="author" content="Your Name">
+    <title>D-Shop SIP Calculator</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Calculator Section */
+        #calculator-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #calculator-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #calculator-section input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #calculator-section input[type="number"]:focus {
+            outline: none;
+            border-color: #45a049; /* Darker green on focus */
+        }
+
+        #calculate-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #calculate-btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>D-Shop SIP Calculator</h1>
+        <p>Plan your investments and achieve your financial goals with our SIP Calculator.</p>
+    </header>
+
+    <main>
+        <!-- SIP Calculator Section -->
+        <section id="calculator-section">
+            <label for="monthly-investment">Monthly Investment (₹):</label>
+            <input type="number" id="monthly-investment" placeholder="Enter monthly investment" min="0">
+
+            <label for="annual-return">Expected Annual Return (%):</label>
+            <input type="number" id="annual-return" placeholder="Enter expected annual return" min="0">
+
+            <label for="investment-duration">Investment Duration (Years):</label>
+            <input type="number" id="investment-duration" placeholder="Enter investment duration" min="0">
+
+            <button id="calculate-btn">Calculate</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>Investment Result</h2>
+            <p id="future-value">Future Value: ₹0.00</p>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 D-Shop SIP Calculator. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to calculate SIP future value
+        function calculateSIP() {
+            const monthlyInvestment = parseFloat(document.getElementById('monthly-investment').value);
+            const annualReturn = parseFloat(document.getElementById('annual-return').value);
+            const investmentDuration = parseFloat(document.getElementById('investment-duration').value);
+
+            if (isNaN(monthlyInvestment) || isNaN(annualReturn) || isNaN(investmentDuration)) {
+                alert("Please enter valid values for all fields.");
+                return;
+            }
+
+            const monthlyReturn = (annualReturn / 100) / 12;
+            const totalMonths = investmentDuration * 12;
+
+            // SIP Future Value Formula
+            const futureValue = monthlyInvestment * ((Math.pow(1 + monthlyReturn, totalMonths) - 1) / monthlyReturn) * (1 + monthlyReturn);
+
+            // Display the result
+            document.getElementById('future-value').textContent = `Future Value: ₹${futureValue.toFixed(2)}`;
+        }
+
+        // Attach event listener to the calculate button
+        document.getElementById('calculate-btn').addEventListener('click', calculateSIP);
+    </script>
+</body>
+</html>
