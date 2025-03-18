@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert between multiple currencies with real-time exchange rates using our Multi-Currency Converter tool.">
+    <meta name="keywords" content="currency converter, exchange rates, online tools, multi-currency converter">
+    <meta name="author" content="Your Name">
+    <title>Multi-Currency Converter - D-Shop Online Tools</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Converter Section */
+        #converter-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #converter-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #converter-section input[type="number"],
+        #converter-section select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #converter-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #converter-section button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Multi-Currency Converter</h1>
+        <p>Convert between multiple currencies with real-time exchange rates.</p>
+    </header>
+
+    <main>
+        <!-- Converter Section -->
+        <section id="converter-section">
+            <label for="from-currency">From Currency:</label>
+            <select id="from-currency">
+                <option value="USD">USD - United States Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+            </select>
+
+            <label for="to-currency">To Currency:</label>
+            <select id="to-currency">
+                <option value="USD">USD - United States Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+
+            <button id="convert-btn">Convert</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>Conversion Result</h2>
+            <p id="result">Enter an amount and select currencies to convert.</p>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 D-Shop Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Currency conversion using ExchangeRate-API
+        const apiKey = 'YOUR_EXCHANGERATE_API_KEY'; // Replace with your API key
+        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
+
+        // Fetch exchange rates
+        let exchangeRates = {};
+
+        async function fetchExchangeRates() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                if (data.result === 'success') {
+                    exchangeRates = data.conversion_rates;
+                } else {
+                    alert('Failed to fetch exchange rates. Please try again later.');
+                }
+            } catch (error) {
+                alert('An error occurred while fetching exchange rates.');
+                console.error(error);
+            }
+        }
+
+        // Perform conversion
+        document.getElementById('convert-btn').addEventListener('click', function() {
+            const fromCurrency = document.getElementById('from-currency').value;
+            const toCurrency = document.getElementById('to-currency').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (isNaN(amount)) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+
+            if (Object.keys(exchangeRates).length === 0) {
+                alert('Exchange rates are not loaded yet. Please try again.');
+                return;
+            }
+
+            const fromRate = exchangeRates[fromCurrency];
+            const toRate = exchangeRates[toCurrency];
+
+            if (!fromRate || !toRate) {
+                alert('Invalid currency selection.');
+                return;
+            }
+
+            const convertedAmount = (amount / fromRate) * toRate;
+            document.getElementById('result').textContent = `Converted Amount: ${convertedAmount.toFixed(2)} ${toCurrency}`;
+        });
+
+        // Fetch exchange rates on page load
+        fetchExchangeRates();
+    </script>
+</body>
+</html>
