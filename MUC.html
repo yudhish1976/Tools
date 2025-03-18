@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert between multiple units like length, weight, and temperature with our easy-to-use Multi-Unit Converter tool.">
+    <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, online tools">
+    <meta name="author" content="Your Name">
+    <title>Multi-Unit Converter - D-Shop Online Tools</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Converter Section */
+        #converter-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #converter-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #converter-section input[type="number"],
+        #converter-section select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #converter-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #converter-section button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Multi-Unit Converter</h1>
+        <p>Convert between multiple units like length, weight, and temperature easily.</p>
+    </header>
+
+    <main>
+        <!-- Converter Section -->
+        <section id="converter-section">
+            <label for="unit-type">Select Unit Type:</label>
+            <select id="unit-type">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+            </select>
+
+            <label for="from-unit">From Unit:</label>
+            <select id="from-unit"></select>
+
+            <label for="to-unit">To Unit:</label>
+            <select id="to-unit"></select>
+
+            <label for="input-value">Enter Value:</label>
+            <input type="number" id="input-value" placeholder="Enter value">
+
+            <button id="convert-btn">Convert</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>Conversion Result</h2>
+            <p id="result">Enter a value and select units to convert.</p>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 D-Shop Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Unit options
+        const units = {
+            length: [
+                { name: "Meters", value: "meters" },
+                { name: "Kilometers", value: "kilometers" },
+                { name: "Feet", value: "feet" },
+                { name: "Miles", value: "miles" },
+            ],
+            weight: [
+                { name: "Grams", value: "grams" },
+                { name: "Kilograms", value: "kilograms" },
+                { name: "Pounds", value: "pounds" },
+                { name: "Ounces", value: "ounces" },
+            ],
+            temperature: [
+                { name: "Celsius", value: "celsius" },
+                { name: "Fahrenheit", value: "fahrenheit" },
+                { name: "Kelvin", value: "kelvin" },
+            ],
+        };
+
+        // Populate unit dropdowns
+        const unitType = document.getElementById('unit-type');
+        const fromUnit = document.getElementById('from-unit');
+        const toUnit = document.getElementById('to-unit');
+
+        function populateUnits() {
+            const selectedType = unitType.value;
+            fromUnit.innerHTML = '';
+            toUnit.innerHTML = '';
+
+            units[selectedType].forEach(unit => {
+                const option1 = document.createElement('option');
+                option1.value = unit.value;
+                option1.textContent = unit.name;
+                fromUnit.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = unit.value;
+                option2.textContent = unit.name;
+                toUnit.appendChild(option2);
+            });
+        }
+
+        unitType.addEventListener('change', populateUnits);
+        populateUnits(); // Initial population
+
+        // Conversion logic
+        document.getElementById('convert-btn').addEventListener('click', function() {
+            const inputValue = parseFloat(document.getElementById('input-value').value);
+            const fromUnitValue = fromUnit.value;
+            const toUnitValue = toUnit.value;
+            const unitTypeValue = unitType.value;
+
+            if (isNaN(inputValue)) {
+                alert('Please enter a valid number.');
+                return;
+            }
+
+            let result;
+
+            switch (unitTypeValue) {
+                case 'length':
+                    result = convertLength(inputValue, fromUnitValue, toUnitValue);
+                    break;
+                case 'weight':
+                    result = convertWeight(inputValue, fromUnitValue, toUnitValue);
+                    break;
+                case 'temperature':
+                    result = convertTemperature(inputValue, fromUnitValue, toUnitValue);
+                    break;
+                default:
+                    result = 'Invalid unit type.';
+            }
+
+            document.getElementById('result').textContent = `Result: ${result.toFixed(2)} ${toUnitValue}`;
+        });
+
+        // Length conversion
+        function convertLength(value, from, to) {
+            const conversions = {
+                meters: 1,
+                kilometers: 0.001,
+                feet: 3.28084,
+                miles: 0.000621371,
+            };
+            return (value / conversions[from]) * conversions[to];
+        }
+
+        // Weight conversion
+        function convertWeight(value, from, to) {
+            const conversions = {
+                grams: 1,
+                kilograms: 0.001,
+                pounds: 0.00220462,
+                ounces: 0.035274,
+            };
+            return (value / conversions[from]) * conversions[to];
+        }
+
+        // Temperature conversion
+        function convertTemperature(value, from, to) {
+            if (from === to) return value;
+
+            if (from === 'celsius') {
+                if (to === 'fahrenheit') return (value * 9 / 5) + 32;
+                if (to === 'kelvin') return value + 273.15;
+            }
+
+            if (from === 'fahrenheit') {
+                if (to === 'celsius') return (value - 32) * 5 / 9;
+                if (to === 'kelvin') return (value - 32) * 5 / 9 + 273.15;
+            }
+
+            if (from === 'kelvin') {
+                if (to === 'celsius') return value - 273.15;
+                if (to === 'fahrenheit') return (value - 273.15) * 9 / 5 + 32;
+            }
+
+            return value;
+        }
+    </script>
+</body>
+</html>
