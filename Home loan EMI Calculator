@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate your Home Loan EMI with our easy-to-use EMI Calculator. Plan your home loan repayments and manage your finances effectively.">
+    <meta name="keywords" content="home loan EMI calculator, EMI calculator, home loan calculator, loan repayment calculator">
+    <meta name="author" content="Your Name">
+    <title>D-Shop Home Loan EMI Calculator</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Calculator Section */
+        #calculator-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #calculator-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #calculator-section input[type="number"],
+        #calculator-section select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #calculator-section input[type="number"]:focus,
+        #calculator-section select:focus {
+            outline: none;
+            border-color: #45a049; /* Darker green on focus */
+        }
+
+        #calculate-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #calculate-btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>D-Shop Home Loan EMI Calculator</h1>
+        <p>Calculate your Home Loan EMI and plan your repayments effectively.</p>
+    </header>
+
+    <main>
+        <!-- EMI Calculator Section -->
+        <section id="calculator-section">
+            <label for="loan-amount">Loan Amount (₹):</label>
+            <input type="number" id="loan-amount" placeholder="Enter loan amount" min="0">
+
+            <label for="interest-rate">Interest Rate (%):</label>
+            <input type="number" id="interest-rate" placeholder="Enter annual interest rate" min="0">
+
+            <label for="loan-tenure">Loan Tenure (Years):</label>
+            <input type="number" id="loan-tenure" placeholder="Enter loan tenure" min="0">
+
+            <label for="interest-type">Interest Type:</label>
+            <select id="interest-type">
+                <option value="reducing">Reducing Balance</option>
+                <option value="fixed">Fixed Interest</option>
+            </select>
+
+            <button id="calculate-btn">Calculate EMI</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>EMI Result</h2>
+            <p id="emi-value">EMI: ₹0.00</p>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 D-Shop Home Loan EMI Calculator. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to calculate Home Loan EMI
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value);
+            const loanTenure = parseFloat(document.getElementById('loan-tenure').value);
+            const interestType = document.getElementById('interest-type').value;
+
+            if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure)) {
+                alert("Please enter valid values for all fields.");
+                return;
+            }
+
+            const monthlyInterestRate = (interestRate / 100) / 12;
+            const totalMonths = loanTenure * 12;
+
+            let emi;
+
+            if (interestType === "reducing") {
+                // Reducing Balance EMI Formula
+                emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalMonths)) /
+                      (Math.pow(1 + monthlyInterestRate, totalMonths) - 1);
+            } else {
+                // Fixed Interest EMI Formula (Simple Interest)
+                const totalInterest = loanAmount * (interestRate / 100) * loanTenure;
+                const totalAmount = loanAmount + totalInterest;
+                emi = totalAmount / totalMonths;
+            }
+
+            // Display the result
+            document.getElementById('emi-value').textContent = `EMI: ₹${emi.toFixed(2)}`;
+        }
+
+        // Attach event listener to the calculate button
+        document.getElementById('calculate-btn').addEventListener('click', calculateEMI);
+    </script>
+</body>
+</html>
