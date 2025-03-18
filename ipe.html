@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enhance the pixels of your images with our online Image Pixel Enhancer tool. Adjust the enhancement level and optimize your images for better quality.">
+    <meta name="keywords" content="image pixel enhancer, image enhancer, online image tools, image optimization">
+    <meta name="author" content="Your Name">
+    <title>Image Pixel Enhancer - D-Shop Online Tools</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Tool Section */
+        #tool-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #tool-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #tool-section input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        #tool-section input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        #tool-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #tool-section button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        #result-section a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #result-section a:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Image Pixel Enhancer</h1>
+        <p>Enhance the pixels of your images for better quality and clarity.</p>
+    </header>
+
+    <main>
+        <!-- Tool Section -->
+        <section id="tool-section">
+            <label for="image-input">Upload Image:</label>
+            <input type="file" id="image-input" accept="image/*">
+
+            <label for="enhancement-level">Enhancement Level:</label>
+            <input type="range" id="enhancement-level" min="1" max="10" value="5">
+            <span id="enhancement-value">5</span>
+
+            <button id="enhance-btn">Enhance Image</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>Enhanced Image</h2>
+            <p id="status">Upload an image to enhance.</p>
+            <img id="enhanced-image" src="#" alt="Enhanced Image" style="display: none;">
+            <a id="download-link" href="#" download style="display: none;">Download Enhanced Image</a>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 D-Shop Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Update enhancement level value display
+        document.getElementById('enhancement-level').addEventListener('input', function() {
+            document.getElementById('enhancement-value').textContent = this.value;
+        });
+
+        // Handle image enhancement
+        document.getElementById('enhance-btn').addEventListener('click', function() {
+            const fileInput = document.getElementById('image-input');
+            const enhancementLevel = parseFloat(document.getElementById('enhancement-level').value);
+
+            if (fileInput.files.length === 0) {
+                alert('Please upload an image.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    // Apply pixel enhancement (example: sharpen effect)
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        // Example: Increase contrast based on enhancement level
+                        data[i] = Math.min(255, data[i] * (1 + enhancementLevel / 10)); // Red
+                        data[i + 1] = Math.min(255, data[i + 1] * (1 + enhancementLevel / 10)); // Green
+                        data[i + 2] = Math.min(255, data[i + 2] * (1 + enhancementLevel / 10)); // Blue
+                    }
+
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Display the enhanced image
+                    const enhancedImage = document.getElementById('enhanced-image');
+                    enhancedImage.src = canvas.toDataURL('image/jpeg', 0.9);
+                    enhancedImage.style.display = 'block';
+
+                    // Enable download link
+                    const downloadLink = document.getElementById('download-link');
+                    downloadLink.href = canvas.toDataURL('image/jpeg', 0.9);
+                    downloadLink.download = 'enhanced_image.jpg';
+                    downloadLink.style.display = 'inline-block';
+
+                    // Update status
+                    document.getElementById('status').textContent = 'Image enhanced!';
+                };
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
