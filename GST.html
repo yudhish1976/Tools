@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate GST amount, total with GST, and total without GST with our easy-to-use GST Calculator tool.">
+    <meta name="keywords" content="GST calculator, GST amount, total with GST, total without GST, online tools">
+    <meta name="author" content="Your Name">
+    <title>GST Calculator - D-Shop Online Tools</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0faf0; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Calculator Section */
+        #calculator-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #calculator-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #calculator-section input[type="number"],
+        #calculator-section select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #calculator-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #calculator-section button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result Section */
+        #result-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #result-section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        #result-section p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ad Space */
+        #ad-space {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>GST Calculator</h1>
+        <p>Calculate GST amount, total with GST, and total without GST easily.</p>
+    </header>
+
+    <main>
+        <!-- Calculator Section -->
+        <section id="calculator-section">
+            <label for="amount">Amount (₹):</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+
+            <label for="gst-rate">GST Rate (%):</label>
+            <input type="number" id="gst-rate" placeholder="Enter GST rate">
+
+            <label for="calculation-type">Calculation Type:</label>
+            <select id="calculation-type">
+                <option value="add-gst">Add GST to Amount</option>
+                <option value="remove-gst">Remove GST from Amount</option>
+            </select>
+
+            <button id="calculate-btn">Calculate</button>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section">
+            <h2>Calculation Result</h2>
+            <p id="gst-amount">GST Amount: ₹0.00</p>
+            <p id="total-with-gst">Total with GST: ₹0.00</p>
+            <p id="total-without-gst">Total without GST: ₹0.00</p>
+        </section>
+
+        <!-- Ad Space -->
+        <section id="ad-space">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 D-Shop Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Handle GST calculation
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const gstRate = parseFloat(document.getElementById('gst-rate').value);
+            const calculationType = document.getElementById('calculation-type').value;
+
+            if (isNaN(amount) || isNaN(gstRate)) {
+                alert('Please enter valid values for amount and GST rate.');
+                return;
+            }
+
+            let gstAmount, totalWithGst, totalWithoutGst;
+
+            if (calculationType === 'add-gst') {
+                // Add GST to the amount
+                gstAmount = (amount * gstRate) / 100;
+                totalWithGst = amount + gstAmount;
+                totalWithoutGst = amount;
+            } else {
+                // Remove GST from the amount
+                totalWithoutGst = (amount * 100) / (100 + gstRate);
+                gstAmount = amount - totalWithoutGst;
+                totalWithGst = amount;
+            }
+
+            // Display the results
+            document.getElementById('gst-amount').textContent = `GST Amount: ₹${gstAmount.toFixed(2)}`;
+            document.getElementById('total-with-gst').textContent = `Total with GST: ₹${totalWithGst.toFixed(2)}`;
+            document.getElementById('total-without-gst').textContent = `Total without GST: ₹${totalWithoutGst.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
